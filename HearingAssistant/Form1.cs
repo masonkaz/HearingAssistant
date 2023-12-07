@@ -27,8 +27,6 @@ namespace HearingAssistant
 		{
 			InitializeComponent();
 
-			// Set the initial balance and step count to 0
-			channelBalance = 0;
 			count = 0;
 
 			Player = new MediaPlayer(); // Initialize the media player that will play the sound used in the program
@@ -52,53 +50,50 @@ namespace HearingAssistant
 		// Function that runs when the Left Ear button is clicked - Changes the audio balance to be further to the right
 		private void LeftButton_Click(object sender, EventArgs e)
 		{
-			count++; // Add to step count
-			// channelBalance = channelBalance + Math.Pow(0.5, count); // Change channel balance so it is slightly farther to the right based on the step user is currently on
-			// Player.Balance = channelBalance; // Change the player's audio balance to the new balance
-			defaultDevice.AudioEndpointVolume.Channels[0].VolumeLevelScalar = defaultDevice.AudioEndpointVolume.Channels[0].VolumeLevelScalar + 0.05f;
+			count++;
+			float newVol = (float)Math.Pow(0.5, count) / 5;
+			defaultDevice.AudioEndpointVolume.Channels[0].VolumeLevelScalar = volRange(defaultDevice.AudioEndpointVolume.Channels[0].VolumeLevelScalar - newVol);
+			defaultDevice.AudioEndpointVolume.Channels[1].VolumeLevelScalar = volRange(defaultDevice.AudioEndpointVolume.Channels[1].VolumeLevelScalar + newVol);
 		}
 
 		// Function that runs when the Right Ear button is clicked - Changes the audio balance to be further to the left
 		private void RightButton_Click(object sender, EventArgs e)
         {
-			count++; // Add to step count
-			// channelBalance = channelBalance - Math.Pow(0.5, count); // Change channel balance so it is slightly farther to the left based on the step user is currently on
-			// Player.Balance = channelBalance; // Change the player's audio balance to the new balance
-			defaultDevice.AudioEndpointVolume.Channels[1].VolumeLevelScalar = defaultDevice.AudioEndpointVolume.Channels[1].VolumeLevelScalar + 0.05f;
-		}
-
-        private void TestButton_Click(object sender, EventArgs e)
-        {
-			float test = defaultDevice.AudioEndpointVolume.Channels[0].VolumeLevelScalar + 0.1f;
-			defaultDevice.AudioEndpointVolume.Channels[0].VolumeLevelScalar = test;
-
+			count++;
+			float newVol = (float)Math.Pow(0.5, count) / 5;
+			defaultDevice.AudioEndpointVolume.Channels[0].VolumeLevelScalar = volRange(defaultDevice.AudioEndpointVolume.Channels[0].VolumeLevelScalar + newVol);
+			defaultDevice.AudioEndpointVolume.Channels[1].VolumeLevelScalar = volRange(defaultDevice.AudioEndpointVolume.Channels[1].VolumeLevelScalar - newVol);
 		}
 
         // Function that runs when the "sounds the same" button is clicked - Sets the computer's audio balance to the calculated audio balance
         private void SameButton_Click(object sender, EventArgs e)
 		{
-			// channelBalance = ((rightChannelVol - leftChannelVol) / Math.Max(leftChannelVol, rightChannelVol)) + channelBalance;
-			if (channelBalance < 0) // Checks to see if balance is to the left
-            {
-				// If it is, calculate the volume of each channel based on original channel volumes
-				defaultDevice.AudioEndpointVolume.Channels[0].VolumeLevelScalar = 1 + (float) channelBalance;
-				defaultDevice.AudioEndpointVolume.Channels[1].VolumeLevelScalar = Math.Abs((float) channelBalance);
-			} else if (channelBalance > 0) // Checks to see if balance is to the right
-            {
-				// If it is, calculate the volume of each channel based on original channel volumes
-				defaultDevice.AudioEndpointVolume.Channels[0].VolumeLevelScalar = (float) channelBalance; 
-				defaultDevice.AudioEndpointVolume.Channels[1].VolumeLevelScalar = 1 - (float) channelBalance;
-			}
+			Label.Text = "Thank you for using Hearing Assistant!";
+			Refresh();
+			System.Threading.Thread.Sleep(3000);
+			this.Close();
 		}
 
-		// Functiont hat runs when the Reset button is clicked - Sets computer's audio back to normal and resets values
+		// Function that runs when the Reset button is clicked - Sets computer's audio back to normal and resets values
 		private void ResetButton_Click(object sender, EventArgs e)
 		{
 			defaultDevice.AudioEndpointVolume.Channels[0].VolumeLevelScalar = leftChannelVol;
 			defaultDevice.AudioEndpointVolume.Channels[1].VolumeLevelScalar = rightChannelVol;
-			channelBalance = 0;
 			count = 0;
-			Player.Balance = 0;
 		}
+
+		private float volRange(float x)
+        {
+			if (x < 0)
+            {
+				return 0f;
+            } else if (x > 1)
+            {
+				return 1f;
+            } else
+            {
+				return x;
+            }
+        }
 	}
 }

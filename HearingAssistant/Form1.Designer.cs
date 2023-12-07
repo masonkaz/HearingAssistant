@@ -29,13 +29,15 @@ namespace HearingAssistant
 		/// </summary>
 		private void InitializeComponent()
 		{
+            this.components = new System.ComponentModel.Container();
             this.LeftButton = new System.Windows.Forms.Button();
             this.RightButton = new System.Windows.Forms.Button();
             this.Label = new System.Windows.Forms.Label();
             this.PlayButton = new System.Windows.Forms.Button();
             this.SameButton = new System.Windows.Forms.Button();
             this.ResetButton = new System.Windows.Forms.Button();
-            this.TestButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // LeftButton
@@ -60,11 +62,10 @@ namespace HearingAssistant
             // 
             // Label
             // 
-            this.Label.AutoSize = true;
             this.Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.Label.Location = new System.Drawing.Point(147, 31);
+            this.Label.Location = new System.Drawing.Point(34, 28);
             this.Label.Name = "Label";
-            this.Label.Size = new System.Drawing.Size(183, 24);
+            this.Label.Size = new System.Drawing.Size(408, 24);
             this.Label.TabIndex = 2;
             this.Label.Text = "Which ear is louder?";
             this.Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -85,7 +86,7 @@ namespace HearingAssistant
             this.SameButton.Name = "SameButton";
             this.SameButton.Size = new System.Drawing.Size(120, 120);
             this.SameButton.TabIndex = 7;
-            this.SameButton.Text = "Sounds the same \r\n(Set Computer Audio)";
+            this.SameButton.Text = "Sounds the same\r\n(Exit Program)";
             this.SameButton.UseVisualStyleBackColor = true;
             this.SameButton.Click += new System.EventHandler(this.SameButton_Click);
             // 
@@ -99,22 +100,23 @@ namespace HearingAssistant
             this.ResetButton.UseVisualStyleBackColor = true;
             this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click);
             // 
-            // TestButton
+            // label1
             // 
-            this.TestButton.Location = new System.Drawing.Point(357, 255);
-            this.TestButton.Name = "TestButton";
-            this.TestButton.Size = new System.Drawing.Size(75, 23);
-            this.TestButton.TabIndex = 9;
-            this.TestButton.Text = "Test";
-            this.TestButton.UseVisualStyleBackColor = true;
-            this.TestButton.Click += new System.EventHandler(this.TestButton_Click);
+            this.label1.AutoSize = true;
+            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label1.Location = new System.Drawing.Point(451, 327);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(13, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "?";
+            this.ToolTip.SetToolTip(this.label1, "Press the left and right buttons to shift audio to the desired ear.");
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(476, 349);
-            this.Controls.Add(this.TestButton);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.ResetButton);
             this.Controls.Add(this.SameButton);
             this.Controls.Add(this.PlayButton);
@@ -136,7 +138,8 @@ namespace HearingAssistant
         private System.Windows.Forms.Button PlayButton;
         private System.Windows.Forms.Button SameButton;
         private System.Windows.Forms.Button ResetButton;
-        private System.Windows.Forms.Button TestButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolTip ToolTip;
     }
 }
 
