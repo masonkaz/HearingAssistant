@@ -15,7 +15,7 @@ namespace HearingAssistant
 	public partial class MainWindow : Form
 	{
 		// Initialize variables and objects for use in program
-		private double channelBalance, count;
+		private double count;
 		private MediaPlayer Player;
 		private Uri path = new Uri(@"Audio\noise.wav", UriKind.Relative);
 		private MMDeviceEnumerator devEnum;
@@ -27,7 +27,7 @@ namespace HearingAssistant
 		{
 			InitializeComponent();
 
-			count = 0;
+			count = 0; // Initialize step count variable to decrease audio metric with every step
 
 			Player = new MediaPlayer(); // Initialize the media player that will play the sound used in the program
 
@@ -65,7 +65,7 @@ namespace HearingAssistant
 			defaultDevice.AudioEndpointVolume.Channels[1].VolumeLevelScalar = volRange(defaultDevice.AudioEndpointVolume.Channels[1].VolumeLevelScalar - newVol);
 		}
 
-        // Function that runs when the "sounds the same" button is clicked - Sets the computer's audio balance to the calculated audio balance
+        // Function that runs when the "sounds the same" button is clicked - Exits the program
         private void SameButton_Click(object sender, EventArgs e)
 		{
 			Label.Text = "Thank you for using Hearing Assistant!";
@@ -82,6 +82,7 @@ namespace HearingAssistant
 			count = 0;
 		}
 
+		// Function for making sure volume never goes outside of its range (0-1)
 		private float volRange(float x)
         {
 			if (x < 0)
